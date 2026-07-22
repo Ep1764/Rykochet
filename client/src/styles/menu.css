@@ -1,0 +1,158 @@
+.screen--menu {
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
+  padding: 20px clamp(16px, 3vw, 40px);
+  gap: var(--gap-3);
+}
+
+.menu-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+.menu-background__canvas { width: 100%; height: 100%; display: block; }
+.menu-background__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(7, 20, 17, 0.85) 90%);
+  pointer-events: none;
+}
+
+.menu-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.user-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 6px 6px 14px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+}
+.user-pill__name { color: var(--text); font-weight: 600; font-size: 13px; }
+.user-pill__logout {
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  color: var(--text-dim);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--panel-border);
+}
+.user-pill__logout:hover { color: var(--danger); border-color: var(--danger); }
+
+.primary-nav {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  justify-self: center;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 220px));
+  gap: var(--gap-3);
+  width: 100%;
+  max-width: 720px;
+}
+.pnav-btn {
+  display: grid;
+  gap: 6px;
+  padding: 18px 20px;
+  text-align: left;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-panel);
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+.pnav-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--panel-border-hover);
+  background: rgba(16, 43, 36, 0.85);
+}
+.pnav-btn__label {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+.pnav-btn__sub { font-size: 12px; color: var(--text-dim); }
+
+.secondary-nav {
+  position: relative;
+  z-index: 1;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-2);
+  padding: 8px 12px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  color: var(--text-dim);
+  font-size: 12px;
+  backdrop-filter: blur(10px);
+}
+.snav-link:hover { color: var(--accent-soft); }
+.snav-sep { color: var(--text-mute); }
+.snav-dev { color: var(--text-mute); }
+.snav-link--discord { color: #7A8CFF; }
+.snav-link--discord:hover { color: #A9B6FF; }
+
+/* Recording controls (top-center) */
+.recording-controls {
+  position: absolute;
+  top: 76px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+}
+.rc-btn {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1;
+  border: 1px solid transparent;
+  transition: background 120ms, border-color 120ms;
+}
+.rc-btn:hover { background: rgba(101, 255, 210, 0.08); border-color: var(--panel-border-hover); }
+.rc-btn--icon { font-weight: 700; }
+.rc-meta { display: grid; padding: 0 6px; max-width: 260px; }
+.rc-meta__title {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rc-meta__author { color: var(--text-dim); font-size: 10px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+  .primary-nav { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
+  .recording-controls { top: auto; bottom: 84px; }
+  .secondary-nav { justify-self: center; flex-wrap: wrap; }
+}
+@media (max-width: 420px) {
+  .primary-nav { grid-template-columns: 1fr; }
+  .pnav-btn { padding: 14px 16px; }
+}

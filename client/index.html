@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#071411" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Rykochet.io</title>
+  </head>
+  <body>
+    <div id="app" class="app">
+      <!-- Screen: Login -->
+      <section id="screen-login" class="screen screen--login" data-screen="login">
+        <div class="login-panel">
+          <header class="login-panel__header">
+            <h1 class="brand">Rykochet<span class="brand__accent">.io</span></h1>
+            <p class="brand__tagline">Physics. Precision. Chaos.</p>
+          </header>
+
+          <nav class="login-tabs" role="tablist">
+            <button class="login-tab is-active" data-tab="signin" role="tab">Sign In</button>
+            <button class="login-tab" data-tab="signup" role="tab">Sign Up</button>
+          </nav>
+
+          <form id="form-signin" class="login-form is-active" autocomplete="on" novalidate>
+            <label class="field">
+              <span class="field__label">Username</span>
+              <input class="field__input" type="text" name="username" required minlength="3" maxlength="20" autocomplete="username" />
+            </label>
+            <label class="field">
+              <span class="field__label">Password</span>
+              <input class="field__input" type="password" name="password" required minlength="8" autocomplete="current-password" />
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="remember" checked />
+              <span>Remember me</span>
+            </label>
+            <button class="btn btn--primary" type="submit">Sign In</button>
+            <button class="link" type="button" data-open="recover">Forgot password?</button>
+          </form>
+
+          <form id="form-signup" class="login-form" autocomplete="on" novalidate>
+            <label class="field">
+              <span class="field__label">Username</span>
+              <input class="field__input" type="text" name="username" required minlength="3" maxlength="20" autocomplete="username" />
+            </label>
+            <label class="field">
+              <span class="field__label">Password</span>
+              <input class="field__input" type="password" name="password" required minlength="8" autocomplete="new-password" />
+            </label>
+            <label class="field">
+              <span class="field__label">Security question</span>
+              <select class="field__input" name="question" required>
+                <option value="">Choose a question…</option>
+                <option value="pet">What was the name of your first pet?</option>
+                <option value="city">What city were you born in?</option>
+                <option value="school">What was the name of your first school?</option>
+                <option value="mother">What is your mother's maiden name?</option>
+                <option value="teacher">Who was your favorite teacher?</option>
+              </select>
+            </label>
+            <label class="field">
+              <span class="field__label">Security answer</span>
+              <input class="field__input" type="text" name="answer" required minlength="2" />
+            </label>
+            <button class="btn btn--primary" type="submit">Create Account</button>
+          </form>
+
+          <p class="login-panel__foot">
+            By continuing you agree to our
+            <a href="/terms" class="link">Terms</a> and
+            <a href="/privacy" class="link">Privacy Policy</a>.
+          </p>
+        </div>
+      </section>
+
+      <!-- Screen: Main Menu -->
+      <section id="screen-menu" class="screen screen--menu" data-screen="menu" hidden>
+        <!-- Background layer: gameplay recording placeholder -->
+        <div class="menu-background">
+          <canvas id="menu-background-canvas" class="menu-background__canvas" aria-hidden="true"></canvas>
+          <div class="menu-background__vignette"></div>
+        </div>
+
+        <!-- Recording controls -->
+        <div class="recording-controls">
+          <button class="rc-btn" data-action="prev" title="Previous clip" aria-label="Previous clip">‹</button>
+          <div class="rc-meta">
+            <span class="rc-meta__title" id="rc-title">Loading today's clips…</span>
+            <span class="rc-meta__author" id="rc-author"></span>
+          </div>
+          <button class="rc-btn" data-action="next" title="Next clip" aria-label="Next clip">›</button>
+          <button class="rc-btn rc-btn--icon" data-action="favorite" title="Favorite map" aria-label="Favorite">★</button>
+          <button class="rc-btn rc-btn--icon" data-action="report" title="Report" aria-label="Report">!</button>
+        </div>
+
+        <!-- Header: user pill -->
+        <header class="menu-header">
+          <div class="brand brand--small">Rykochet<span class="brand__accent">.io</span></div>
+          <div class="user-pill">
+            <span class="user-pill__name" id="user-pill-name">Guest</span>
+            <button class="user-pill__logout" type="button" data-action="logout">Log out</button>
+          </div>
+        </header>
+
+        <!-- Primary navigation -->
+        <nav class="primary-nav">
+          <button class="pnav-btn" data-nav="quickplay">
+            <span class="pnav-btn__label">Quick Play</span>
+            <span class="pnav-btn__sub">Jump into a match</span>
+          </button>
+          <button class="pnav-btn" data-nav="parties">
+            <span class="pnav-btn__label">Parties</span>
+            <span class="pnav-btn__sub">Play with friends</span>
+          </button>
+          <button class="pnav-btn" data-nav="shop">
+            <span class="pnav-btn__label">Shop</span>
+            <span class="pnav-btn__sub">Cosmetics &amp; effects</span>
+          </button>
+          <button class="pnav-btn" data-nav="tutorial">
+            <span class="pnav-btn__label">Tutorial</span>
+            <span class="pnav-btn__sub">Learn the ropes</span>
+          </button>
+          <button class="pnav-btn" data-nav="avatar">
+            <span class="pnav-btn__label">Avatar</span>
+            <span class="pnav-btn__sub">Customize your ball</span>
+          </button>
+          <button class="pnav-btn" data-nav="updates">
+            <span class="pnav-btn__label">Updates</span>
+            <span class="pnav-btn__sub">Patch notes</span>
+          </button>
+        </nav>
+
+        <!-- Secondary navigation -->
+        <footer class="secondary-nav">
+          <a class="snav-link" href="/terms">Terms</a>
+          <a class="snav-link" href="/privacy">Privacy</a>
+          <span class="snav-sep" aria-hidden="true">•</span>
+          <span class="snav-dev">Developer: Quixlume</span>
+          <a class="snav-link snav-link--discord" href="https://discord.gg/" rel="noopener" target="_blank">Discord</a>
+        </footer>
+      </section>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

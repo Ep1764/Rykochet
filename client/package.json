@@ -1,0 +1,20 @@
+{
+  "name": "@rykochet/client",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5173",
+    "build": "vite build",
+    "preview": "vite preview",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@fingerprintjs/fingerprintjs": "^4.4.0",
+    "@rykochet/shared": "*"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0",
+    "vite-plugin-javascript-obfuscator": "^3.1.0"
+  }
+}

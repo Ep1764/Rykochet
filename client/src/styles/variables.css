@@ -1,0 +1,35 @@
+:root {
+  --bg-0: #071411;
+  --bg-1: #0B1F1A;
+  --bg-2: #102B24;
+
+  --panel: rgba(10, 20, 18, 0.75);
+  --panel-solid: #0E241E;
+  --panel-border: rgba(101, 255, 210, 0.10);
+  --panel-border-hover: rgba(101, 255, 210, 0.28);
+
+  --accent: #19E68C;
+  --accent-alt: #00D9B5;
+  --accent-soft: #65FFD2;
+
+  --text: #E6FFF6;
+  --text-dim: #7FA69A;
+  --text-mute: #4E7269;
+
+  --danger: #FF5A73;
+
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 18px;
+
+  --shadow-panel: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+  --gap-1: 6px;
+  --gap-2: 10px;
+  --gap-3: 16px;
+  --gap-4: 24px;
+  --gap-5: 36px;
+
+  --font-brand: 'Rajdhani', 'Segoe UI', system-ui, sans-serif;
+}
