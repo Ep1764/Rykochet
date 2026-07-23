@@ -1,20 +1,16 @@
-import type { ScreenManager } from '../ui/screen-manager.js';
+import type { ScreenManager, ScreenName } from '../ui/screen-manager.js';
 
 export function mountMenu(manager: ScreenManager): void {
-  const logout = document.querySelector<HTMLButtonElement>('[data-action="logout"]');
-  logout?.addEventListener('click', () => {
-    manager.show('login');
-  });
-
-  document.querySelectorAll<HTMLButtonElement>('.rc-btn').forEach((btn) => {
+  document.querySelectorAll<HTMLButtonElement>('#screen-menu .pnav-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
-      // Placeholder: recording control actions wired up later.
+      const target = btn.dataset['nav'] as ScreenName | undefined;
+      if (target) manager.show(target);
     });
   });
 
-  document.querySelectorAll<HTMLButtonElement>('.pnav-btn').forEach((btn) => {
+  document.querySelectorAll<HTMLButtonElement>('.recording-strip .rc-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
-      // Placeholder: primary nav routes wired up later.
+      // Placeholder: wire real recording controls later.
     });
   });
 

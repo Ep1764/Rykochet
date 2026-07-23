@@ -1,0 +1,97 @@
+/* Updates / changelog. */
+
+.screen--updates {
+  padding: 20px clamp(16px, 3vw, 40px);
+  gap: 16px;
+  grid-template-rows: auto 1fr;
+}
+
+.up-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.up-title {
+  font-family: var(--font-brand);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+}
+.up-title__accent { color: var(--accent); }
+
+.up-list {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.up-list .panel__body {
+  overflow: auto;
+  padding: 18px 22px;
+}
+
+.up-entry {
+  padding: 16px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+}
+.up-entry:first-child { padding-top: 0; }
+.up-entry:last-child { border-bottom: none; }
+
+.up-entry__head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.up-entry__version {
+  font-family: var(--font-brand);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+.up-entry__date {
+  font-size: 11px;
+  color: var(--text-mute);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.up-group { margin: 10px 0; }
+.up-group__label {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.up-group__label--new  { color: #57E39E; background: rgba(87, 227, 158, 0.12); }
+.up-group__label--fix  { color: #7A8CFF; background: rgba(122, 140, 255, 0.12); }
+.up-group__label--bal  { color: #FFC845; background: rgba(255, 200, 69, 0.12); }
+.up-group__label--rmv  { color: #FF5A73; background: rgba(255, 90, 115, 0.12); }
+
+.up-group ul {
+  list-style: none;
+  display: grid;
+  gap: 4px;
+  padding-left: 4px;
+}
+.up-group li {
+  font-size: 13px;
+  color: var(--text);
+  padding-left: 16px;
+  position: relative;
+}
+.up-group li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--text-mute);
+}
