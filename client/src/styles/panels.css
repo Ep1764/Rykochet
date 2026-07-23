@@ -1,0 +1,246 @@
+/* -------------------------------------------------------------
+ * Panel design system.
+ * Every visible UI element belongs to a panel. Nothing floats.
+ * ------------------------------------------------------------- */
+
+.panel {
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+}
+.panel--flush { padding: 0; }
+.panel--tight { padding: 12px; }
+.panel--std   { padding: 16px; }
+.panel--roomy { padding: 24px; }
+
+.panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.25);
+}
+.panel__title {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+.panel__body { padding: 14px; }
+
+/* --- Sub-tiles inside panels --- */
+.tile {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  padding: 10px 12px;
+  transition: background 120ms, border-color 120ms, transform 120ms;
+}
+.tile:hover {
+  background: rgba(25, 230, 140, 0.06);
+  border-color: rgba(101, 255, 210, 0.20);
+}
+.tile.is-active {
+  background: linear-gradient(180deg, rgba(25, 230, 140, 0.14), rgba(0, 217, 181, 0.06));
+  border-color: rgba(101, 255, 210, 0.35);
+}
+
+/* --- Small compact button --- */
+.mini-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.25);
+  transition: color 120ms, background 120ms, border-color 120ms;
+}
+.mini-btn:hover {
+  color: var(--text);
+  border-color: rgba(101, 255, 210, 0.28);
+  background: rgba(25, 230, 140, 0.08);
+}
+.mini-btn.is-primary {
+  color: #041F17;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-alt) 100%);
+  border-color: transparent;
+  font-weight: 700;
+}
+.mini-btn.is-primary:hover { filter: brightness(1.08); background: linear-gradient(180deg, var(--accent) 0%, var(--accent-alt) 100%); }
+.mini-btn.is-danger { color: var(--danger); border-color: rgba(255, 90, 115, 0.3); }
+.mini-btn.is-danger:hover { background: rgba(255, 90, 115, 0.08); border-color: var(--danger); }
+
+/* --- Chip / pill --- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--text-dim);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.chip__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+
+/* --- Section title inside a panel --- */
+.section-title {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  padding: 2px 4px 6px;
+}
+
+/* --- Return button — used on every sub-screen --- */
+.return-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--text-dim);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.return-btn:hover { color: var(--text); border-color: rgba(101, 255, 210, 0.28); }
+
+/* --- Modal overlay --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  z-index: 200;
+  padding: 24px;
+}
+.modal-overlay[hidden] { display: none; }
+.modal {
+  width: min(560px, 100%);
+  max-height: min(90vh, 800px);
+  display: flex;
+  flex-direction: column;
+}
+.modal--wide { width: min(760px, 100%); }
+
+/* --- Divider --- */
+.hdivider { height: 1px; background: rgba(255, 255, 255, 0.05); margin: 12px 0; }
+
+/* --- Kbd chip --- */
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  cursor: pointer;
+  user-select: none;
+}
+.kbd:hover { border-color: rgba(101, 255, 210, 0.28); background: rgba(25, 230, 140, 0.06); }
+.kbd.is-listening {
+  border-color: var(--accent);
+  background: rgba(25, 230, 140, 0.14);
+  color: var(--accent-soft);
+}
+.kbd--empty { color: var(--text-mute); }
+
+/* --- Toggle switch --- */
+.switch {
+  --w: 34px;
+  --h: 20px;
+  display: inline-block;
+  position: relative;
+  width: var(--w);
+  height: var(--h);
+  cursor: pointer;
+}
+.switch input { position: absolute; opacity: 0; inset: 0; }
+.switch__track {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 140ms;
+}
+.switch__thumb {
+  position: absolute;
+  top: 2px; left: 2px;
+  width: calc(var(--h) - 6px);
+  height: calc(var(--h) - 6px);
+  border-radius: 999px;
+  background: var(--text-dim);
+  transition: transform 140ms, background 140ms;
+}
+.switch input:checked ~ .switch__track { background: rgba(25, 230, 140, 0.35); border-color: rgba(25, 230, 140, 0.5); }
+.switch input:checked ~ .switch__thumb { transform: translateX(calc(var(--w) - var(--h))); background: var(--accent); }
+
+/* --- Segmented control --- */
+.segmented {
+  display: inline-flex;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+}
+.segmented__opt {
+  padding: 0 12px;
+  height: 26px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: color 120ms, background 120ms;
+}
+.segmented__opt.is-active {
+  color: #041F17;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-alt) 100%);
+  font-weight: 700;
+}
+
+/* --- Team color swatches (subtle gradients) --- */
+.team-red     { background: linear-gradient(135deg, rgba(255, 90, 115, 0.20), rgba(180, 30, 60, 0.10)); border-color: rgba(255, 90, 115, 0.30); }
+.team-blue    { background: linear-gradient(135deg, rgba(80, 140, 255, 0.20), rgba(30, 60, 180, 0.10)); border-color: rgba(120, 170, 255, 0.30); }
+.team-yellow  { background: linear-gradient(135deg, rgba(255, 210, 90, 0.18), rgba(180, 130, 20, 0.10)); border-color: rgba(255, 210, 90, 0.30); }
+.team-green   { background: linear-gradient(135deg, rgba(25, 230, 140, 0.20), rgba(0, 130, 90, 0.10)); border-color: rgba(101, 255, 210, 0.30); }
+.team-purple  { background: linear-gradient(135deg, rgba(180, 120, 255, 0.20), rgba(90, 40, 180, 0.10)); border-color: rgba(200, 150, 255, 0.30); }
+.team-spec    { background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(180, 200, 220, 0.03)); border-color: rgba(255, 255, 255, 0.08); }
+.team-none    { background: rgba(255, 255, 255, 0.03); border-color: rgba(255, 255, 255, 0.06); }

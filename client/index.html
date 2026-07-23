@@ -9,9 +9,48 @@
   </head>
   <body>
     <div id="app" class="app">
-      <!-- Screen: Login -->
+
+      <!-- ============================================================
+           STATS BAR (persistent overlay)
+           ============================================================ -->
+      <div class="stats-bar-trigger" aria-hidden="true"></div>
+      <div id="stats-bar" class="stats-bar" data-open="false">
+        <div class="stats-bar__row">
+          <div class="stats-bar__left">
+            <button class="sb-settings" type="button" data-action="open-settings" title="Settings" aria-label="Settings">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+            <div class="sb-avatar" aria-hidden="true"></div>
+            <span class="sb-username" id="sb-username">Player</span>
+            <div class="sb-level" style="--fill:62" title="Level 12, 62% to next">
+              <span class="sb-level__num" id="sb-level-num">12</span>
+            </div>
+            <div class="sb-live">
+              <span class="sb-live__dot"></span>
+              <span class="sb-live__num" id="sb-live-num">0</span>
+              <span>online</span>
+            </div>
+          </div>
+          <div class="stats-bar__right">
+            <button class="sb-toggle" type="button" data-action="toggle-music" title="Music" aria-label="Toggle music">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            </button>
+            <button class="sb-toggle" type="button" data-action="toggle-sfx" title="Sound effects" aria-label="Toggle sound effects">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            </button>
+            <button class="sb-leave" type="button" data-action="leave-game" id="sb-leave" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Leave
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SCREEN: LOGIN
+           ============================================================ -->
       <section id="screen-login" class="screen screen--login" data-screen="login">
-        <div class="login-panel">
+        <div class="login-panel panel">
           <header class="login-panel__header">
             <h1 class="brand">Rykochet<span class="brand__accent">.io</span></h1>
             <p class="brand__tagline">Physics. Precision. Chaos.</p>
@@ -74,72 +113,580 @@
         </div>
       </section>
 
-      <!-- Screen: Main Menu -->
+      <!-- ============================================================
+           SCREEN: MAIN MENU
+           ============================================================ -->
       <section id="screen-menu" class="screen screen--menu" data-screen="menu" hidden>
-        <!-- Background layer: gameplay recording placeholder -->
         <div class="menu-background">
           <canvas id="menu-background-canvas" class="menu-background__canvas" aria-hidden="true"></canvas>
           <div class="menu-background__vignette"></div>
         </div>
 
-        <!-- Recording controls -->
-        <div class="recording-controls">
-          <button class="rc-btn" data-action="prev" title="Previous clip" aria-label="Previous clip">‹</button>
+        <!-- Recording controls (top of screen). -->
+        <div class="recording-strip panel panel--tight">
+          <button class="rc-btn" data-action="prev" title="Previous clip" aria-label="Previous">‹</button>
           <div class="rc-meta">
             <span class="rc-meta__title" id="rc-title">Loading today's clips…</span>
             <span class="rc-meta__author" id="rc-author"></span>
           </div>
-          <button class="rc-btn" data-action="next" title="Next clip" aria-label="Next clip">›</button>
-          <button class="rc-btn rc-btn--icon" data-action="favorite" title="Favorite map" aria-label="Favorite">★</button>
-          <button class="rc-btn rc-btn--icon" data-action="report" title="Report" aria-label="Report">!</button>
+          <button class="rc-btn" data-action="next" title="Next clip" aria-label="Next">›</button>
+          <button class="rc-btn" data-action="favorite" title="Favorite" aria-label="Favorite">★</button>
+          <button class="rc-btn" data-action="report" title="Report" aria-label="Report">!</button>
         </div>
 
-        <!-- Header: user pill -->
-        <header class="menu-header">
-          <div class="brand brand--small">Rykochet<span class="brand__accent">.io</span></div>
-          <div class="user-pill">
-            <span class="user-pill__name" id="user-pill-name">Guest</span>
-            <button class="user-pill__logout" type="button" data-action="logout">Log out</button>
+        <div class="menu-body">
+          <div class="menu-brand-panel panel">
+            <div class="brand">Rykochet<span class="brand__accent">.io</span></div>
+            <div class="menu-brand-panel__tagline">Physics · Precision · Chaos</div>
           </div>
-        </header>
 
-        <!-- Primary navigation -->
-        <nav class="primary-nav">
-          <button class="pnav-btn" data-nav="quickplay">
-            <span class="pnav-btn__label">Quick Play</span>
-            <span class="pnav-btn__sub">Jump into a match</span>
-          </button>
-          <button class="pnav-btn" data-nav="parties">
-            <span class="pnav-btn__label">Parties</span>
-            <span class="pnav-btn__sub">Play with friends</span>
-          </button>
-          <button class="pnav-btn" data-nav="shop">
-            <span class="pnav-btn__label">Shop</span>
-            <span class="pnav-btn__sub">Cosmetics &amp; effects</span>
-          </button>
-          <button class="pnav-btn" data-nav="tutorial">
-            <span class="pnav-btn__label">Tutorial</span>
-            <span class="pnav-btn__sub">Learn the ropes</span>
-          </button>
-          <button class="pnav-btn" data-nav="avatar">
-            <span class="pnav-btn__label">Avatar</span>
-            <span class="pnav-btn__sub">Customize your ball</span>
-          </button>
-          <button class="pnav-btn" data-nav="updates">
-            <span class="pnav-btn__label">Updates</span>
-            <span class="pnav-btn__sub">Patch notes</span>
-          </button>
-        </nav>
+          <!-- Primary navigation: compact vertical stack in a parent panel. -->
+          <div class="primary-nav-panel panel">
+            <div class="panel__head"><span class="panel__title">Main Menu</span></div>
+            <div class="panel__body">
+              <nav class="primary-nav">
+                <button class="pnav-btn" data-nav="quickplay">
+                  <span class="pnav-btn__icon">Q</span>
+                  <span>
+                    <span class="pnav-btn__label">Quick Play</span>
+                    <br><span class="pnav-btn__sub">Jump into a match</span>
+                  </span>
+                  <span class="pnav-btn__arrow">›</span>
+                </button>
+                <button class="pnav-btn" data-nav="parties">
+                  <span class="pnav-btn__icon">P</span>
+                  <span>
+                    <span class="pnav-btn__label">Parties</span>
+                    <br><span class="pnav-btn__sub">Lobby browser</span>
+                  </span>
+                  <span class="pnav-btn__arrow">›</span>
+                </button>
+                <button class="pnav-btn" data-nav="shop">
+                  <span class="pnav-btn__icon">S</span>
+                  <span>
+                    <span class="pnav-btn__label">Shop</span>
+                    <br><span class="pnav-btn__sub">Cosmetics &amp; effects</span>
+                  </span>
+                  <span class="pnav-btn__arrow">›</span>
+                </button>
+                <button class="pnav-btn" data-nav="tutorial">
+                  <span class="pnav-btn__icon">T</span>
+                  <span>
+                    <span class="pnav-btn__label">Tutorial</span>
+                    <br><span class="pnav-btn__sub">Learn the ropes</span>
+                  </span>
+                  <span class="pnav-btn__arrow">›</span>
+                </button>
+                <button class="pnav-btn" data-nav="avatar">
+                  <span class="pnav-btn__icon">A</span>
+                  <span>
+                    <span class="pnav-btn__label">Avatar</span>
+                    <br><span class="pnav-btn__sub">Customize your ball</span>
+                  </span>
+                  <span class="pnav-btn__arrow">›</span>
+                </button>
+                <button class="pnav-btn" data-nav="updates">
+                  <span class="pnav-btn__icon">U</span>
+                  <span>
+                    <span class="pnav-btn__label">Updates</span>
+                    <br><span class="pnav-btn__sub">Patch notes</span>
+                  </span>
+                  <span class="pnav-btn__arrow">›</span>
+                </button>
+              </nav>
+            </div>
+          </div>
 
-        <!-- Secondary navigation -->
-        <footer class="secondary-nav">
-          <a class="snav-link" href="/terms">Terms</a>
-          <a class="snav-link" href="/privacy">Privacy</a>
-          <span class="snav-sep" aria-hidden="true">•</span>
-          <span class="snav-dev">Developer: Quixlume</span>
-          <a class="snav-link snav-link--discord" href="https://discord.gg/" rel="noopener" target="_blank">Discord</a>
-        </footer>
+          <div class="secondary-nav panel panel--tight">
+            <a class="snav-link" href="/terms">Terms</a>
+            <span class="snav-sep">•</span>
+            <a class="snav-link" href="/privacy">Privacy</a>
+            <span class="snav-sep">•</span>
+            <span class="snav-dev">Developer: Quixlume</span>
+            <span class="snav-sep">•</span>
+            <a class="snav-link snav-link--discord" href="https://discord.gg/" rel="noopener" target="_blank">Discord</a>
+          </div>
+        </div>
       </section>
+
+      <!-- ============================================================
+           SCREEN: QUICK PLAY
+           ============================================================ -->
+      <section id="screen-quickplay" class="screen screen--quickplay" data-screen="quickplay" hidden>
+        <div class="qp-topbar">
+          <div class="qp-title">Quick <span class="qp-title__accent">Play</span></div>
+          <button class="return-btn" data-nav="menu">‹ Menu</button>
+        </div>
+
+        <div class="qp-modes panel">
+          <div class="panel__head"><span class="panel__title">Game Modes</span></div>
+          <div class="panel__body" id="qp-mode-list">
+            <!-- populated by screens/quickplay.ts -->
+          </div>
+        </div>
+
+        <div class="qp-right">
+          <div class="qp-desc panel">
+            <div class="panel__head">
+              <span class="panel__title">Mode Info</span>
+              <span class="chip"><span class="chip__dot"></span> <span id="qp-mode-status">Selected</span></span>
+            </div>
+            <div class="panel__body">
+              <div class="qp-desc__title" id="qp-desc-title">—</div>
+              <div class="qp-desc__row"><div class="qp-desc__key">Objective</div><div class="qp-desc__val" id="qp-desc-obj">—</div></div>
+              <div class="qp-desc__row"><div class="qp-desc__key">Controls</div><div class="qp-desc__val" id="qp-desc-ctrl">—</div></div>
+              <div class="qp-desc__row"><div class="qp-desc__key">Overview</div><div class="qp-desc__val" id="qp-desc-over">—</div></div>
+            </div>
+          </div>
+
+          <div class="qp-showcase panel">
+            <div class="panel__head"><span class="panel__title">Showcase</span></div>
+            <canvas class="qp-showcase__canvas" id="qp-showcase"></canvas>
+            <div class="qp-showcase__ph" id="qp-showcase-ph">Select a mode</div>
+          </div>
+        </div>
+
+        <div class="qp-actions">
+          <div class="qp-live panel panel--tight">
+            <span class="qp-live__label">Playing now</span>
+            <span class="qp-live__num" id="qp-live-num">0</span>
+          </div>
+          <button class="qp-launch" type="button" id="qp-launch">Launch ›</button>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SCREEN: PARTIES
+           ============================================================ -->
+      <section id="screen-parties" class="screen screen--parties" data-screen="parties" hidden>
+        <div class="parties-topbar">
+          <div class="parties-title">Par<span class="parties-title__accent">ties</span></div>
+          <div class="parties-stats">
+            <span class="chip"><span class="chip__dot"></span> <b id="parties-total-lobbies">0</b>&nbsp;lobbies</span>
+            <span class="chip"><span class="chip__dot"></span> <b id="parties-total-players">0</b>&nbsp;players</span>
+            <button class="return-btn" data-nav="menu">‹ Menu</button>
+          </div>
+        </div>
+
+        <div class="parties-filters panel">
+          <div class="panel__head"><span class="panel__title">Filters</span></div>
+          <div class="panel__body">
+            <div class="filter-group">
+              <span class="filter-group__label">Game mode</span>
+              <select class="filter-select" id="pf-mode">
+                <option value="">All</option>
+                <option>Classic</option>
+                <option>Rykochet</option>
+                <option>Bullet</option>
+                <option>Rubber Bullet</option>
+                <option>Grapple</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <span class="filter-group__label">Locked</span>
+              <select class="filter-select" id="pf-locked">
+                <option value="">Any</option>
+                <option value="0">Unlocked only</option>
+                <option value="1">Locked only</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <span class="filter-group__label">Region</span>
+              <select class="filter-select" id="pf-region">
+                <option value="">Any</option>
+                <option>NA</option><option>EU</option><option>SA</option><option>AS</option><option>OC</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <span class="filter-group__label">Players</span>
+              <div class="filter-range">
+                <input type="number" min="1" max="16" placeholder="min" id="pf-pmin" />
+                <span>–</span>
+                <input type="number" min="1" max="16" placeholder="max" id="pf-pmax" />
+              </div>
+            </div>
+            <div class="filter-group">
+              <span class="filter-group__label">Level</span>
+              <div class="filter-range">
+                <input type="number" min="0" max="100" placeholder="min" id="pf-lmin" />
+                <span>–</span>
+                <input type="number" min="0" max="100" placeholder="max" id="pf-lmax" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="parties-list panel">
+          <div class="panel__head">
+            <span class="panel__title">Lobbies</span>
+            <input type="search" placeholder="Search…" class="filter-select" style="height: 28px; width: 200px;" id="pf-search" />
+          </div>
+          <div class="panel__body">
+            <table class="lobby-table">
+              <thead>
+                <tr>
+                  <th>Lobby</th>
+                  <th>Host</th>
+                  <th>Mode</th>
+                  <th>Min Lvl</th>
+                  <th>Players</th>
+                  <th>Region</th>
+                  <th>Locked</th>
+                </tr>
+              </thead>
+              <tbody id="lobby-tbody">
+                <!-- populated by screens/parties.ts -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="parties-actions">
+          <span class="qp-live__label" style="align-self:center;">Can't find one? Make your own.</span>
+          <button class="parties-create" type="button" data-action="open-create-lobby">Create Lobby</button>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SCREEN: LOBBY
+           ============================================================ -->
+      <section id="screen-lobby" class="screen screen--lobby" data-screen="lobby" hidden>
+        <div class="lb-topbar">
+          <div class="lb-topbar__title">Lobby<span class="lb-topbar__mode" id="lb-mode-name"> · Classic</span></div>
+          <button class="lb-teamlock" type="button" data-action="toggle-teamlock">🔒 Unlock Teams</button>
+        </div>
+
+        <div class="lb-players panel">
+          <div class="panel__head"><span class="panel__title">Players <span id="lb-player-count">3 / 8</span></span></div>
+          <div class="panel__body">
+            <div class="player-grid" id="lb-player-grid"><!-- populated --></div>
+          </div>
+        </div>
+
+        <div class="lb-specs panel">
+          <div class="panel__head"><span class="panel__title">Spectators</span></div>
+          <div class="panel__body">
+            <div class="spec-list" id="lb-spec-list"><!-- populated --></div>
+          </div>
+        </div>
+
+        <div class="lb-chat panel">
+          <div class="panel__head"><span class="panel__title">Chat</span></div>
+          <div class="panel__body">
+            <div class="chat-log" id="lb-chat-log"><!-- populated --></div>
+            <div class="chat-input">
+              <input type="text" id="lb-chat-input" placeholder="Say something…" maxlength="200" autocomplete="one-time-code" />
+            </div>
+          </div>
+        </div>
+
+        <div class="lb-controls panel">
+          <div class="panel__body">
+            <div class="lb-mapcard">
+              <span class="lb-mapcard__label">Current Map</span>
+              <span class="lb-mapcard__name" id="lb-map-name">Meridian</span>
+              <span class="lb-mapcard__author">by <span id="lb-map-author">Fantao</span></span>
+            </div>
+            <div class="lb-btn-grid">
+              <button class="mini-btn" data-action="lb-map">Map</button>
+              <button class="mini-btn" data-action="lb-mode">Mode</button>
+              <button class="mini-btn" data-action="lb-teams">Teams: Off</button>
+              <button class="mini-btn" data-action="lb-edit">Edit</button>
+              <button class="mini-btn" data-action="lb-private">Private</button>
+              <button class="mini-btn" data-action="lb-name">Name</button>
+            </div>
+            <button class="lb-play" type="button" data-action="lb-play">Play</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SCREEN: SHOP
+           ============================================================ -->
+      <section id="screen-shop" class="screen screen--shop" data-screen="shop" hidden>
+        <div class="shop-topbar">
+          <div class="shop-title">Sh<span class="shop-title__accent">op</span></div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div class="shop-balance panel panel--tight">
+              <span class="shop-balance__coin"></span>
+              <span class="shop-balance__num" id="shop-coins">0</span>
+              <button class="shop-balance__plus" type="button" title="Buy coins" aria-label="Buy coins">+</button>
+            </div>
+            <button class="return-btn" data-nav="menu">‹ Menu</button>
+          </div>
+        </div>
+
+        <div class="shop-cats panel">
+          <div class="panel__head"><span class="panel__title">Categories</span></div>
+          <div class="panel__body" id="shop-cats"><!-- populated --></div>
+        </div>
+
+        <div class="shop-items panel">
+          <div class="panel__head"><span class="panel__title" id="shop-cat-title">Trails</span></div>
+          <div class="panel__body">
+            <div class="item-grid" id="shop-items"><!-- populated --></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SCREEN: TUTORIAL
+           ============================================================ -->
+      <section id="screen-tutorial" class="screen screen--tutorial" data-screen="tutorial" hidden>
+        <div class="qp-topbar">
+          <div class="qp-title">Tuto<span class="qp-title__accent">rial</span></div>
+          <button class="return-btn" data-nav="menu">‹ Menu</button>
+        </div>
+
+        <div class="qp-modes panel">
+          <div class="panel__head"><span class="panel__title">Lessons</span></div>
+          <div class="panel__body" id="tut-mode-list"><!-- populated --></div>
+        </div>
+
+        <div class="qp-right">
+          <div class="qp-desc panel">
+            <div class="panel__head">
+              <span class="panel__title">Lesson</span>
+              <span class="chip"><span class="chip__dot"></span> Offline</span>
+            </div>
+            <div class="panel__body">
+              <div class="qp-desc__title" id="tut-desc-title">—</div>
+              <div class="qp-desc__row"><div class="qp-desc__key">Teaches</div><div class="qp-desc__val" id="tut-desc-teach">—</div></div>
+              <div class="qp-desc__row"><div class="qp-desc__key">Difficulty</div><div class="qp-desc__val" id="tut-desc-diff">—</div></div>
+              <div class="qp-desc__row"><div class="qp-desc__key">Length</div><div class="qp-desc__val" id="tut-desc-len">—</div></div>
+            </div>
+          </div>
+          <div class="qp-showcase panel">
+            <div class="panel__head"><span class="panel__title">Preview</span></div>
+            <canvas class="qp-showcase__canvas" id="tut-showcase"></canvas>
+            <div class="qp-showcase__ph">Select a lesson</div>
+          </div>
+        </div>
+
+        <div class="qp-actions">
+          <span></span>
+          <button class="qp-launch" type="button" id="tut-launch">Learn ›</button>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SCREEN: AVATAR
+           ============================================================ -->
+      <section id="screen-avatar" class="screen screen--avatar" data-screen="avatar" hidden>
+        <div class="av-topbar">
+          <div class="av-title">Av<span class="av-title__accent">atar</span></div>
+          <button class="return-btn" data-nav="menu">‹ Menu</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head"><span class="panel__title">Slots</span></div>
+          <div class="panel__body">
+            <div class="av-slots">
+              <div class="av-slots__row" id="av-slot-row"><!-- 5 slots injected --></div>
+              <div class="av-slot-actions">
+                <button class="mini-btn is-primary" type="button" data-action="av-select">Set Active</button>
+                <button class="mini-btn" type="button" data-action="av-edit">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skin editor overlay (hidden by default) -->
+        <div class="skin-editor" id="skin-editor" hidden>
+          <div class="se-top">
+            <div class="se-top__title">Skin Editor</div>
+            <div style="display:flex; gap:8px;">
+              <button class="mini-btn" type="button" data-action="se-cancel">Cancel</button>
+              <button class="mini-btn is-primary" type="button" data-action="se-save">Save</button>
+            </div>
+          </div>
+
+          <div class="se-layers panel">
+            <div class="panel__head"><span class="panel__title">Layers</span></div>
+            <div class="panel__body" id="se-layer-list"><!-- populated --></div>
+          </div>
+
+          <div class="se-canvas-panel panel">
+            <div class="panel__head"><span class="panel__title">Preview</span></div>
+            <div class="panel__body">
+              <div class="se-canvas">Canvas · 512×512</div>
+            </div>
+          </div>
+
+          <div class="se-props panel">
+            <div class="panel__head"><span class="panel__title">Properties</span></div>
+            <div class="panel__body">
+              <div class="se-prop-row"><span class="se-prop-row__label">Base Color</span><div class="se-color-swatch" id="se-basecolor"></div></div>
+              <div class="se-prop-row"><span class="se-prop-row__label">X</span><input type="number" step="1" value="0"/></div>
+              <div class="se-prop-row"><span class="se-prop-row__label">Y</span><input type="number" step="1" value="0"/></div>
+              <div class="se-prop-row"><span class="se-prop-row__label">Rotation</span><input type="number" step="1" value="0"/></div>
+              <div class="se-prop-row"><span class="se-prop-row__label">Scale</span><input type="number" step="0.05" value="1"/></div>
+              <div class="se-prop-row"><span class="se-prop-row__label">Opacity</span><input type="number" step="0.05" min="0" max="1" value="1"/></div>
+            </div>
+          </div>
+
+          <div class="se-library panel">
+            <div class="panel__head"><span class="panel__title">Asset Library</span></div>
+            <div class="panel__body" id="se-library"><!-- populated --></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SCREEN: UPDATES
+           ============================================================ -->
+      <section id="screen-updates" class="screen screen--updates" data-screen="updates" hidden>
+        <div class="up-topbar">
+          <div class="up-title">Up<span class="up-title__accent">dates</span></div>
+          <button class="return-btn" data-nav="menu">‹ Menu</button>
+        </div>
+        <div class="up-list panel">
+          <div class="panel__head"><span class="panel__title">Changelog</span></div>
+          <div class="panel__body" id="up-list"><!-- populated --></div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SETTINGS MODAL
+           ============================================================ -->
+      <div class="modal-overlay" id="settings-modal" hidden>
+        <div class="modal settings-modal panel">
+          <div class="panel__head">
+            <span class="panel__title">Settings</span>
+            <button class="mini-btn" data-action="close-settings">Close</button>
+          </div>
+          <div class="panel__body">
+            <section class="settings-section">
+              <div class="settings-section__head">Keybinds</div>
+              <table class="keybind-table">
+                <thead>
+                  <tr><th>Action</th><th>Pair 1</th><th>Pair 2</th><th>Pair 3</th></tr>
+                </thead>
+                <tbody id="keybind-tbody"><!-- populated --></tbody>
+              </table>
+            </section>
+
+            <section class="settings-section">
+              <div class="settings-section__head">Gameplay</div>
+              <div class="setting-row">
+                <div><div class="setting-row__label">Language filter</div><div class="setting-row__hint">Hide profanity in chat</div></div>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="switch__track"></span>
+                  <span class="switch__thumb"></span>
+                </label>
+              </div>
+              <div class="setting-row">
+                <div><div class="setting-row__label">Graphics quality</div><div class="setting-row__hint">Rendering preset</div></div>
+                <div class="segmented" role="tablist">
+                  <button class="segmented__opt" data-quality="low">Low</button>
+                  <button class="segmented__opt is-active" data-quality="med">Medium</button>
+                  <button class="segmented__opt" data-quality="high">High</button>
+                </div>
+              </div>
+              <div class="setting-row">
+                <div><div class="setting-row__label">Show FPS counter</div><div class="setting-row__hint">Overlay in-game</div></div>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="switch__track"></span>
+                  <span class="switch__thumb"></span>
+                </label>
+              </div>
+            </section>
+
+            <section class="settings-section">
+              <div class="settings-section__head">Account</div>
+              <div class="setting-row">
+                <div><div class="setting-row__label">Change password</div><div class="setting-row__hint" id="cp-hint-status">Only outside a match</div></div>
+                <button class="mini-btn" data-action="open-change-password" id="cp-open">Change…</button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <!-- Change password sub-modal -->
+      <div class="modal-overlay" id="change-password-modal" hidden>
+        <div class="modal change-password-modal panel">
+          <div class="panel__head">
+            <span class="panel__title">Change Password</span>
+            <button class="mini-btn" data-action="close-change-password">Close</button>
+          </div>
+          <div class="panel__body">
+            <form id="cp-form" novalidate>
+              <label class="field" style="margin-bottom:10px;">
+                <span class="field__label">Security question</span>
+                <select class="field__input" required>
+                  <option value="">Choose…</option>
+                  <option>What was the name of your first pet?</option>
+                  <option>What city were you born in?</option>
+                  <option>What was the name of your first school?</option>
+                  <option>What is your mother's maiden name?</option>
+                  <option>Who was your favorite teacher?</option>
+                </select>
+              </label>
+              <label class="field" style="margin-bottom:10px;">
+                <span class="field__label">Answer</span>
+                <input class="field__input" type="text" required minlength="2">
+              </label>
+              <label class="field" style="margin-bottom:10px;">
+                <span class="field__label">New password</span>
+                <input class="field__input" type="password" required minlength="8">
+              </label>
+              <button class="btn btn--primary" type="submit" style="width:100%; margin-top:6px;">Update password</button>
+            </form>
+            <div class="cp-help">
+              Having trouble recovering your account? Join our
+              <a href="https://discord.gg/" target="_blank" rel="noopener">Discord</a> server and create a support ticket for assistance.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Join-lobby progress popup -->
+      <div class="modal-overlay" id="join-progress-modal" hidden>
+        <div class="modal panel" style="width:min(360px,100%);">
+          <div class="panel__head"><span class="panel__title">Joining Lobby</span></div>
+          <div class="panel__body">
+            <div class="join-progress">
+              <div class="jp-line" data-step="0"><span class="jp-line__dot"></span>Connecting…</div>
+              <div class="jp-line" data-step="1"><span class="jp-line__dot"></span>Requesting player data…</div>
+              <div class="jp-line" data-step="2"><span class="jp-line__dot"></span>Synchronizing…</div>
+              <div class="jp-line" data-step="3"><span class="jp-line__dot"></span>Joining lobby…</div>
+              <div class="jp-line" data-step="4"><span class="jp-line__dot"></span>Successfully joined.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Create-lobby modal -->
+      <div class="modal-overlay" id="create-lobby-modal" hidden>
+        <div class="modal panel">
+          <div class="panel__head">
+            <span class="panel__title">Create Lobby</span>
+            <button class="mini-btn" data-action="close-create-lobby">Close</button>
+          </div>
+          <div class="panel__body create-lobby-modal">
+            <form id="cl-form" novalidate>
+              <div class="cl-row"><span class="cl-row__label">Name</span><input type="text" required maxlength="30"></div>
+              <div class="cl-row"><span class="cl-row__label">Max players</span>
+                <select><option>2</option><option>4</option><option>6</option><option selected>8</option><option>12</option><option>16</option></select>
+              </div>
+              <div class="cl-row"><span class="cl-row__label">Game mode</span>
+                <select><option>Classic</option><option>Rykochet</option><option>Bullet</option><option>Rubber Bullet</option><option>Grapple</option></select>
+              </div>
+              <div class="cl-row"><span class="cl-row__label">Min level</span><input type="number" min="0" max="100" value="0"></div>
+              <div class="cl-row"><span class="cl-row__label">Max level</span><input type="number" min="0" max="100" value="100"></div>
+              <div class="cl-row"><span class="cl-row__label">Password</span><input type="password" placeholder="(optional)"></div>
+              <div class="cl-row"><span class="cl-row__label">Visibility</span>
+                <select><option value="public">Public</option><option value="invisible">Invisible (not listed)</option></select>
+              </div>
+              <button class="btn btn--primary" type="submit" style="margin-top:8px; width:100%;">Create</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <script type="module" src="/src/main.ts"></script>

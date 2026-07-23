@@ -1,0 +1,82 @@
+/* Settings popup — keybinds, gameplay, account. */
+
+.settings-modal { max-height: min(90vh, 720px); }
+.settings-modal .panel__body {
+  overflow: auto;
+  max-height: calc(min(90vh, 720px) - 60px);
+}
+
+.settings-section { margin-bottom: 20px; }
+.settings-section:last-child { margin-bottom: 0; }
+
+.settings-section__head {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-soft);
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(101, 255, 210, 0.12);
+  margin-bottom: 12px;
+}
+
+/* --- Keybind table --- */
+.keybind-table { width: 100%; border-collapse: separate; border-spacing: 0 4px; }
+.keybind-table th {
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  padding: 0 8px 6px;
+  font-weight: 500;
+}
+.keybind-table td {
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.keybind-table td:first-child {
+  border-left: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px 0 0 8px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+}
+.keybind-table td:last-child {
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 0 8px 8px 0;
+}
+
+/* --- Setting row --- */
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 4px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+}
+.setting-row:last-child { border-bottom: none; }
+.setting-row__label {
+  font-size: 12px;
+  color: var(--text);
+}
+.setting-row__hint {
+  font-size: 10px;
+  color: var(--text-mute);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* --- Change password sub-modal --- */
+.change-password-modal { width: min(440px, 100%); }
+.cp-help {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--text-mute);
+  text-align: center;
+  line-height: 1.5;
+}
+.cp-help a { color: #7A8CFF; }
+.cp-help a:hover { color: #A9B6FF; }
