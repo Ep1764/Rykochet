@@ -11,19 +11,37 @@ interface Entry {
 
 const ENTRIES: Entry[] = [
   {
-    version: 'v0.0.1',
+    version: 'v0.0.3',
     date: '2026-07-23',
-    new: [
-      'Scaffold: login, main menu, parties, lobby, shop, tutorial, avatar, updates screens.',
-      'Persistent stats bar with slide-down animation.',
-      'Settings modal with keybinds (3 pairs per action), gameplay, and account sections.',
+    fix: [
+      'Fixed main menu layout — brand top-left, navigation dead-center, secondary nav pinned to bottom-right.',
+      'Removed decorative icon squares from primary navigation buttons.',
     ],
-    fix: ['Recording controls moved to top of main menu.'],
+    rmv: [
+      'Removed all placeholder content from Quick Play, Parties, Lobby, Shop, Tutorial, and Avatar screens. Screens now show empty states until the backend is connected.',
+    ],
   },
   {
-    version: 'v0.0.0',
+    version: 'v0.0.2',
+    date: '2026-07-23',
+    new: [
+      'Refactored main menu into a compact vertical stack inside a parent panel.',
+      'Added persistent stats bar with slide-down-on-hover behavior.',
+      'Added settings modal (keybinds table with three pairs per action, gameplay options, account section with change-password flow).',
+      'Scaffolded all main-menu subpages: Quick Play, Parties, Lobby, Shop, Tutorial, Avatar, Updates.',
+    ],
+    fix: [
+      'Moved recording controls to the top of the main menu.',
+    ],
+  },
+  {
+    version: 'v0.0.1',
     date: '2026-07-22',
-    new: ['Initial project scaffold: client (Vite + TS), server (Fastify + Postgres), shared types.', 'Deployment pipeline: dev → prod split with basic auth on dev.'],
+    new: [
+      'Initial project scaffold: client (Vite + TypeScript), server (Fastify + PostgreSQL), shared types.',
+      'Deployment pipeline: dev → prod split with basic auth on dev.',
+      'Client build: minification + heavy obfuscation for production.',
+    ],
   },
 ];
 

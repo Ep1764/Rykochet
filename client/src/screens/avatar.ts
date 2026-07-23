@@ -1,45 +1,27 @@
 import type { ScreenManager } from '../ui/screen-manager.js';
 
 const SLOTS = 5;
-const LAYERS = ['Base Body', 'Body Pattern', 'Eyes', 'Mouth', 'Hat'];
-const ASSETS = ['eyes_round', 'eyes_angry', 'mouth_smile', 'mouth_sad', 'hat_cowboy', 'hat_crown', 'hat_wizard', 'horns', 'glasses', 'cape'];
 
 export function mountAvatar(manager: ScreenManager): void {
   renderSlots();
-  renderEditor();
+  renderEditorEmpty();
   wire(manager);
 }
 
 function renderSlots(): void {
   const row = document.getElementById('av-slot-row');
   if (!row) return;
-  row.innerHTML = Array.from({ length: SLOTS }, (_, i) => {
-    const isActive = i === 0;
-    const isSelected = i === 0;
-    return `
-    <div class="av-slot${isActive ? ' is-active' : ''}${isSelected ? ' is-selected' : ''}" data-slot="${String(i)}">
-      <div class="av-slot__preview"></div>
-    </div>`;
-  }).join('');
+  row.innerHTML = Array.from({ length: SLOTS }, (_, i) => `
+    <div class="av-slot${i === 0 ? ' is-selected' : ''}" data-slot="${String(i)}">
+      <span class="av-slot__empty">Empty</span>
+    </div>`).join('');
 }
 
-function renderEditor(): void {
+function renderEditorEmpty(): void {
   const layerList = document.getElementById('se-layer-list');
   const library = document.getElementById('se-library');
-  if (layerList) {
-    layerList.innerHTML = LAYERS.map(
-      (name, i) => `
-      <div class="se-layer${i === 2 ? ' is-selected' : ''}" data-layer="${name}">
-        <span>${name}</span>
-        <span>≡</span>
-      </div>`,
-    ).join('');
-  }
-  if (library) {
-    library.innerHTML = ASSETS.map(
-      (a) => `<div class="se-asset" data-asset="${a}">${a.replace('_', ' ')}</div>`,
-    ).join('');
-  }
+  if (layerList) layerList.innerHTML = emptyState('No layers', '');
+  if (library) library.innerHTML = emptyState('No assets', '');
 }
 
 function wire(manager: ScreenManager): void {
@@ -67,19 +49,8 @@ function wire(manager: ScreenManager): void {
   document.querySelector<HTMLButtonElement>('[data-action="se-save"]')?.addEventListener('click', () => {
     if (editor) editor.hidden = true;
   });
+}
 
-  // Highlight matching asset when hovering a layer.
-  const layerList = document.getElementById('se-layer-list');
-  const library = document.getElementById('se-library');
-  layerList?.addEventListener('mouseover', (e) => {
-    const layer = (e.target as HTMLElement).closest<HTMLElement>('.se-layer');
-    if (!layer || !library) return;
-    const name = (layer.dataset['layer'] ?? '').toLowerCase().replace(/\s+/g, '_');
-    library.querySelectorAll<HTMLElement>('.se-asset').forEach((a) => {
-      a.classList.toggle('is-highlighted', (a.dataset['asset'] ?? '').includes(name));
-    });
-  });
-  layerList?.addEventListener('mouseout', () => {
-    library?.querySelectorAll<HTMLElement>('.se-asset').forEach((a) => a.classList.remove('is-highlighted'));
-  });
+function emptyState(title: string, hint: string): string {
+  return `<div class="empty-state"><div class="empty-state__title">${title}</div>${hint ? `<div class="empty-state__hint">${hint}</div>` : ''}</div>`;
 }

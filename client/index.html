@@ -21,9 +21,9 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             </button>
             <div class="sb-avatar" aria-hidden="true"></div>
-            <span class="sb-username" id="sb-username">Player</span>
-            <div class="sb-level" style="--fill:62" title="Level 12, 62% to next">
-              <span class="sb-level__num" id="sb-level-num">12</span>
+            <span class="sb-username" id="sb-username">—</span>
+            <div class="sb-level" style="--fill:0" title="Level 0">
+              <span class="sb-level__num" id="sb-level-num">0</span>
             </div>
             <div class="sb-live">
               <span class="sb-live__dot"></span>
@@ -126,7 +126,7 @@
         <div class="recording-strip panel panel--tight">
           <button class="rc-btn" data-action="prev" title="Previous clip" aria-label="Previous">‹</button>
           <div class="rc-meta">
-            <span class="rc-meta__title" id="rc-title">Loading today's clips…</span>
+            <span class="rc-meta__title" id="rc-title">—</span>
             <span class="rc-meta__author" id="rc-author"></span>
           </div>
           <button class="rc-btn" data-action="next" title="Next clip" aria-label="Next">›</button>
@@ -146,7 +146,6 @@
             <div class="panel__body">
               <nav class="primary-nav">
                 <button class="pnav-btn" data-nav="quickplay">
-                  <span class="pnav-btn__icon">Q</span>
                   <span>
                     <span class="pnav-btn__label">Quick Play</span>
                     <br><span class="pnav-btn__sub">Jump into a match</span>
@@ -154,7 +153,6 @@
                   <span class="pnav-btn__arrow">›</span>
                 </button>
                 <button class="pnav-btn" data-nav="parties">
-                  <span class="pnav-btn__icon">P</span>
                   <span>
                     <span class="pnav-btn__label">Parties</span>
                     <br><span class="pnav-btn__sub">Lobby browser</span>
@@ -162,7 +160,6 @@
                   <span class="pnav-btn__arrow">›</span>
                 </button>
                 <button class="pnav-btn" data-nav="shop">
-                  <span class="pnav-btn__icon">S</span>
                   <span>
                     <span class="pnav-btn__label">Shop</span>
                     <br><span class="pnav-btn__sub">Cosmetics &amp; effects</span>
@@ -170,7 +167,6 @@
                   <span class="pnav-btn__arrow">›</span>
                 </button>
                 <button class="pnav-btn" data-nav="tutorial">
-                  <span class="pnav-btn__icon">T</span>
                   <span>
                     <span class="pnav-btn__label">Tutorial</span>
                     <br><span class="pnav-btn__sub">Learn the ropes</span>
@@ -178,7 +174,6 @@
                   <span class="pnav-btn__arrow">›</span>
                 </button>
                 <button class="pnav-btn" data-nav="avatar">
-                  <span class="pnav-btn__icon">A</span>
                   <span>
                     <span class="pnav-btn__label">Avatar</span>
                     <br><span class="pnav-btn__sub">Customize your ball</span>
@@ -186,7 +181,6 @@
                   <span class="pnav-btn__arrow">›</span>
                 </button>
                 <button class="pnav-btn" data-nav="updates">
-                  <span class="pnav-btn__icon">U</span>
                   <span>
                     <span class="pnav-btn__label">Updates</span>
                     <br><span class="pnav-btn__sub">Patch notes</span>
@@ -352,12 +346,12 @@
            ============================================================ -->
       <section id="screen-lobby" class="screen screen--lobby" data-screen="lobby" hidden>
         <div class="lb-topbar">
-          <div class="lb-topbar__title">Lobby<span class="lb-topbar__mode" id="lb-mode-name"> · Classic</span></div>
+          <div class="lb-topbar__title">Lobby<span class="lb-topbar__mode" id="lb-mode-name"></span></div>
           <button class="lb-teamlock" type="button" data-action="toggle-teamlock">🔒 Unlock Teams</button>
         </div>
 
         <div class="lb-players panel">
-          <div class="panel__head"><span class="panel__title">Players <span id="lb-player-count">3 / 8</span></span></div>
+          <div class="panel__head"><span class="panel__title">Players <span id="lb-player-count">0 / 8</span></span></div>
           <div class="panel__body">
             <div class="player-grid" id="lb-player-grid"><!-- populated --></div>
           </div>
@@ -384,8 +378,8 @@
           <div class="panel__body">
             <div class="lb-mapcard">
               <span class="lb-mapcard__label">Current Map</span>
-              <span class="lb-mapcard__name" id="lb-map-name">Meridian</span>
-              <span class="lb-mapcard__author">by <span id="lb-map-author">Fantao</span></span>
+              <span class="lb-mapcard__name" id="lb-map-name">—</span>
+              <span class="lb-mapcard__author">by <span id="lb-map-author">—</span></span>
             </div>
             <div class="lb-btn-grid">
               <button class="mini-btn" data-action="lb-map">Map</button>
