@@ -1,8 +1,11 @@
-/* Main menu — compact vertical nav inside a parent panel. */
+/* Main menu — compact vertical nav inside a parent panel.
+ * .screen already has position:absolute; inset:0. We use flex to center the
+ * primary nav, and absolute positioning for the corner panels. */
 
 .screen--menu {
-  display: block;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 0;
 }
 
@@ -58,7 +61,7 @@
 }
 .recording-strip .rc-meta__author { color: var(--text-dim); font-size: 10px; }
 
-/* ---------- Brand panel (top-left) ---------- */
+/* ---------- Brand panel (top-left corner) ---------- */
 .menu-brand-panel {
   position: absolute;
   top: 20px;
@@ -76,12 +79,9 @@
   margin-top: 4px;
 }
 
-/* ---------- Primary nav (dead-center) ---------- */
+/* ---------- Primary nav (centered by flex parent) ---------- */
 .primary-nav-panel {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   z-index: 2;
   width: min(340px, calc(100% - 40px));
 }
@@ -128,12 +128,12 @@
 }
 .pnav-btn:hover .pnav-btn__arrow { color: var(--accent-soft); transform: translateX(3px); }
 
-/* ---------- Secondary nav (bottom-right corner) ---------- */
+/* ---------- Secondary nav (bottom-right corner, GUARANTEED visible) ---------- */
 .secondary-nav {
   position: absolute;
-  right: clamp(16px, 3vw, 40px);
   bottom: 20px;
-  z-index: 1;
+  right: clamp(16px, 3vw, 40px);
+  z-index: 5;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -154,12 +154,6 @@
     top: 68px;
     transform: translateX(-50%);
     text-align: center;
-  }
-  .primary-nav-panel {
-    top: auto;
-    bottom: 76px;
-    transform: translateX(-50%);
-    left: 50%;
   }
   .secondary-nav {
     left: 50%;
