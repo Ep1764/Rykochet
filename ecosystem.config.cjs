@@ -1,9 +1,16 @@
+// PM2 process file. Prod runs from /var/www/rykochet (main branch);
+// dev runs from /var/www/rykochet-dev (develop branch). Both use their own .env.
+// Load PM2 with:  pm2 start /var/www/rykochet/ecosystem.config.cjs
+
+const PROD_DIR = '/var/www/rykochet';
+const DEV_DIR = '/var/www/rykochet-dev';
+
 module.exports = {
   apps: [
     {
       name: 'rykochet-prod',
-      script: 'server/dist/index.js',
-      cwd: __dirname,
+      cwd: PROD_DIR,
+      script: `${PROD_DIR}/server/dist/index.js`,
       instances: 1,
       exec_mode: 'fork',
       env: {
@@ -18,8 +25,8 @@ module.exports = {
     },
     {
       name: 'rykochet-dev',
-      script: 'server/dist/index.js',
-      cwd: __dirname,
+      cwd: DEV_DIR,
+      script: `${DEV_DIR}/server/dist/index.js`,
       instances: 1,
       exec_mode: 'fork',
       env: {
