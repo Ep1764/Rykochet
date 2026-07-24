@@ -30,11 +30,11 @@ const HEX_RE = /^#[0-9a-fA-F]{6}$/;
 
 function validateRecipe(input: unknown): AvatarRecipe | null {
   if (!input || typeof input !== 'object') return null;
-  const r = input as Partial<AvatarRecipe>;
+  const r = input as { baseColor?: unknown; layers?: unknown; equipment?: unknown };
   if (typeof r.baseColor !== 'string' || !HEX_RE.test(r.baseColor)) return null;
   if (!Array.isArray(r.layers) || r.layers.length > 32) return null;
   const layers = [];
-  for (const layerRaw of r.layers) {
+  for (const layerRaw of r.layers as unknown[]) {
     if (!layerRaw || typeof layerRaw !== 'object') return null;
     const l = layerRaw as Record<string, unknown>;
     if (typeof l['id'] !== 'string' || typeof l['stickerId'] !== 'string') return null;
