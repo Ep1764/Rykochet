@@ -1,3 +1,5 @@
+import { apiLogout } from '../api/auth.js';
+import { accountStore } from '../state/account.js';
 import type { ScreenManager } from './screen-manager.js';
 
 const IN_GAME_SCREENS = new Set(['lobby']);
@@ -27,11 +29,8 @@ export function mountStatsBar(manager: ScreenManager, openSettings: () => void):
   bar.addEventListener('mouseleave', scheduleClose);
   trigger.addEventListener('mouseleave', scheduleClose);
 
-  // Show/hide leave button based on screen.
   manager.onChange((name) => {
-    if (leaveBtn) {
-      leaveBtn.hidden = !IN_GAME_SCREENS.has(name);
-    }
+    if (leaveBtn) leaveBtn.hidden = !IN_GAME_SCREENS.has(name);
   });
 
   bar.querySelector('[data-action="open-settings"]')?.addEventListener('click', openSettings);
@@ -44,4 +43,33 @@ export function mountStatsBar(manager: ScreenManager, openSettings: () => void):
   leaveBtn?.addEventListener('click', () => {
     manager.show('menu');
   });
+
+  // Hydrate from account state.
+  const username = document.getElementById('sb-username');
+  const levelNum = document.getElementById('sb-level-num');
+  const levelRing = bar.querySelector<HTMLElement>('.sb-level');
+  accountStore.subscribe((account) => {
+    if (username) username.textContent = account?.username ?? '—';
+    if (levelNum) levelNum.textContent = String(account?.level ?? 0);
+    if (levelRing) {
+      const xp = account?.xp ?? 0;
+      const pct = clamp(xp % 100, 0, 100);
+      levelRing.style.setProperty('--fill', String(pct));
+    }
+  });
+
+  bar.querySelector('[data-action="logout"]')?.addEventListener('click', () => {
+    void (async (): Promise<void> => {
+      try {
+        await apiLogout();
+      } finally {
+        accountStore.set(null);
+        manager.show('login');
+      }
+    })();
+  });
+}
+
+function clamp(n: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, n));
 }

@@ -5,6 +5,7 @@ export type ScreenName =
   | 'parties'
   | 'lobby'
   | 'shop'
+  | 'friends'
   | 'tutorial'
   | 'avatar'
   | 'updates';

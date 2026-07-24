@@ -85,3 +85,11 @@
   height: 16px;
   accent-color: var(--accent);
 }
+
+.login-error {
+  min-height: 16px;
+  color: var(--danger);
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 0.02em;
+}

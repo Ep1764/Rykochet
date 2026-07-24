@@ -42,6 +42,9 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
               Leave
             </button>
+            <button class="sb-toggle" type="button" data-action="logout" title="Sign out" aria-label="Sign out">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -105,6 +108,8 @@
             <button class="btn btn--primary" type="submit">Create Account</button>
           </form>
 
+          <div id="login-error" class="login-error" role="alert"></div>
+
           <p class="login-panel__foot">
             By continuing you agree to our
             <a href="/terms" class="link">Terms</a> and
@@ -163,6 +168,13 @@
                   <span>
                     <span class="pnav-btn__label">Shop</span>
                     <br><span class="pnav-btn__sub">Cosmetics &amp; effects</span>
+                  </span>
+                  <span class="pnav-btn__arrow">›</span>
+                </button>
+                <button class="pnav-btn" data-nav="friends">
+                  <span>
+                    <span class="pnav-btn__label">Friends</span>
+                    <br><span class="pnav-btn__sub">Manage friends</span>
                   </span>
                   <span class="pnav-btn__arrow">›</span>
                 </button>
@@ -420,6 +432,23 @@
           <div class="panel__body">
             <div class="item-grid" id="shop-items"><!-- populated --></div>
           </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SCREEN: FRIENDS
+           ============================================================ -->
+      <section id="screen-friends" class="screen screen--friends" data-screen="friends" hidden>
+        <div class="fr-topbar">
+          <div class="fr-title">Fri<span class="fr-title__accent">ends</span></div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span class="chip"><span class="chip__dot"></span> <b id="friends-count">0</b>&nbsp;total</span>
+            <button class="return-btn" data-nav="menu">‹ Menu</button>
+          </div>
+        </div>
+        <div class="fr-list-panel panel">
+          <div class="panel__head"><span class="panel__title">Your Friends</span></div>
+          <div class="panel__body" id="friends-list"><!-- populated --></div>
         </div>
       </section>
 
