@@ -1,4 +1,5 @@
 import { apiLogout } from '../api/auth.js';
+import { activeAvatarStore } from '../avatar/store.js';
 import { accountStore } from '../state/account.js';
 import type { ScreenManager } from './screen-manager.js';
 
@@ -48,6 +49,7 @@ export function mountStatsBar(manager: ScreenManager, openSettings: () => void):
   const username = document.getElementById('sb-username');
   const levelNum = document.getElementById('sb-level-num');
   const levelRing = bar.querySelector<HTMLElement>('.sb-level');
+  const avatarEl = bar.querySelector<HTMLElement>('.sb-avatar');
   accountStore.subscribe((account) => {
     if (username) username.textContent = account?.username ?? '—';
     if (levelNum) levelNum.textContent = String(account?.level ?? 0);
@@ -55,6 +57,15 @@ export function mountStatsBar(manager: ScreenManager, openSettings: () => void):
       const xp = account?.xp ?? 0;
       const pct = clamp(xp % 100, 0, 100);
       levelRing.style.setProperty('--fill', String(pct));
+    }
+  });
+  activeAvatarStore.subscribe((dataUrl) => {
+    if (!avatarEl) return;
+    if (dataUrl) {
+      avatarEl.style.backgroundImage = `url(${dataUrl})`;
+      avatarEl.style.backgroundSize = 'cover';
+    } else {
+      avatarEl.style.backgroundImage = '';
     }
   });
 

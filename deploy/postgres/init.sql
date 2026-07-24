@@ -103,10 +103,12 @@ CREATE TABLE IF NOT EXISTS owned_cosmetics (
 CREATE TABLE IF NOT EXISTS avatar_slots (
   account_id BIGINT NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
   slot_index INT NOT NULL CHECK (slot_index BETWEEN 0 AND 4),
-  recipe     JSONB,
+  name       TEXT NOT NULL DEFAULT 'Avatar',
+  recipe     JSONB NOT NULL DEFAULT '{"baseColor":"#19E68C","layers":[],"equipment":{"trail":null,"bulletTrail":null,"deathAnimation":null,"spawnEffect":null}}'::JSONB,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   PRIMARY KEY (account_id, slot_index)
 );
+ALTER TABLE avatar_slots ADD COLUMN IF NOT EXISTS name TEXT NOT NULL DEFAULT 'Avatar';
 
 CREATE TABLE IF NOT EXISTS friendships (
   id           BIGSERIAL PRIMARY KEY,

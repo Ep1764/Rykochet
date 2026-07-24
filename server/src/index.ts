@@ -8,6 +8,7 @@ import { ping } from './db.js';
 import { sessionPlugin } from './middleware/session.js';
 import { adminRoutes } from './routes/admin.js';
 import { authRoutes } from './routes/auth.js';
+import { avatarRoutes } from './routes/avatar.js';
 import { healthRoutes } from './routes/health.js';
 
 async function main(): Promise<void> {
@@ -25,6 +26,7 @@ async function main(): Promise<void> {
   await app.register(sessionPlugin);
   await app.register(healthRoutes);
   await app.register(authRoutes);
+  await app.register(avatarRoutes);
   await app.register(adminRoutes);
 
   try {

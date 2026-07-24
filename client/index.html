@@ -517,40 +517,84 @@
         <!-- Skin editor overlay (hidden by default) -->
         <div class="skin-editor" id="skin-editor" hidden>
           <div class="se-top">
-            <div class="se-top__title">Skin Editor</div>
+            <div class="se-top__title">Skin Editor · <span id="se-slot-name">—</span></div>
             <div style="display:flex; gap:8px;">
               <button class="mini-btn" type="button" data-action="se-cancel">Cancel</button>
-              <button class="mini-btn is-primary" type="button" data-action="se-save">Save</button>
+              <button class="mini-btn is-primary" type="button" data-action="se-save" id="se-save-btn">Save</button>
             </div>
           </div>
 
           <div class="se-layers panel">
-            <div class="panel__head"><span class="panel__title">Layers</span></div>
+            <div class="panel__head">
+              <span class="panel__title">Layers</span>
+              <span class="panel__title" style="opacity:0.6" id="se-layer-count">0</span>
+            </div>
             <div class="panel__body" id="se-layer-list"><!-- populated --></div>
           </div>
 
           <div class="se-canvas-panel panel">
-            <div class="panel__head"><span class="panel__title">Preview</span></div>
+            <div class="panel__head">
+              <span class="panel__title">Live Preview</span>
+              <span class="chip"><span class="chip__dot"></span> auto-updates</span>
+            </div>
             <div class="panel__body">
-              <div class="se-canvas">Canvas · 512×512</div>
+              <div class="se-canvas" id="se-canvas-host">
+                <img class="se-canvas__img" id="se-canvas-img" alt="Avatar preview" />
+              </div>
             </div>
           </div>
 
           <div class="se-props panel">
-            <div class="panel__head"><span class="panel__title">Properties</span></div>
-            <div class="panel__body">
-              <div class="se-prop-row"><span class="se-prop-row__label">Base Color</span><div class="se-color-swatch" id="se-basecolor"></div></div>
-              <div class="se-prop-row"><span class="se-prop-row__label">X</span><input type="number" step="1" value="0"/></div>
-              <div class="se-prop-row"><span class="se-prop-row__label">Y</span><input type="number" step="1" value="0"/></div>
-              <div class="se-prop-row"><span class="se-prop-row__label">Rotation</span><input type="number" step="1" value="0"/></div>
-              <div class="se-prop-row"><span class="se-prop-row__label">Scale</span><input type="number" step="0.05" value="1"/></div>
-              <div class="se-prop-row"><span class="se-prop-row__label">Opacity</span><input type="number" step="0.05" min="0" max="1" value="1"/></div>
+            <div class="panel__head">
+              <span class="panel__title" id="se-props-title">Properties</span>
+            </div>
+            <div class="panel__body" id="se-props-body">
+              <!-- Base color view — visible when NO layer is selected -->
+              <div class="se-props-view" id="se-props-base">
+                <div class="se-prop-row">
+                  <span class="se-prop-row__label">Base Color</span>
+                  <input type="color" id="se-basecolor" class="se-color-input" value="#19E68C"/>
+                </div>
+                <p class="se-props-hint">
+                  This is the permanent color of the underlying ball. It doesn't belong to any layer — select a layer to edit its properties.
+                </p>
+              </div>
+              <!-- Layer view — visible when a layer IS selected -->
+              <div class="se-props-view" id="se-props-layer" hidden>
+                <div class="se-prop-row"><span class="se-prop-row__label">X</span><input type="range" min="-256" max="256" step="1" value="0" data-prop="x"/></div>
+                <div class="se-prop-row"><span class="se-prop-row__label">Y</span><input type="range" min="-256" max="256" step="1" value="0" data-prop="y"/></div>
+                <div class="se-prop-row"><span class="se-prop-row__label">Scale</span><input type="range" min="0.1" max="3" step="0.05" value="1" data-prop="scale"/></div>
+                <div class="se-prop-row"><span class="se-prop-row__label">Rotation</span><input type="range" min="0" max="360" step="1" value="0" data-prop="rotation"/></div>
+                <div class="se-prop-row"><span class="se-prop-row__label">Opacity</span><input type="range" min="0" max="1" step="0.05" value="1" data-prop="opacity"/></div>
+                <div class="se-prop-row"><span class="se-prop-row__label">Color</span>
+                  <span style="display:flex; align-items:center; gap:6px;">
+                    <input type="color" class="se-color-input" value="#FFFFFF" data-prop="color"/>
+                    <button class="mini-btn" type="button" data-action="se-clear-color" title="Use sticker's default colors">✕</button>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
+          <!-- Bottom band: two tabs (Stickers | Equipment) inside one panel -->
           <div class="se-library panel">
-            <div class="panel__head"><span class="panel__title">Asset Library</span></div>
-            <div class="panel__body" id="se-library"><!-- populated --></div>
+            <div class="panel__head">
+              <span class="se-library-tabs">
+                <button class="se-tab is-active" data-tab="stickers">Stickers</button>
+                <button class="se-tab" data-tab="equipment">Equipment</button>
+              </span>
+              <select class="filter-select" id="se-equip-filter" hidden>
+                <option value="all">All categories</option>
+                <option value="trail">Trails</option>
+                <option value="bulletTrail">Bullet Trails</option>
+                <option value="deathAnimation">Death Animations</option>
+                <option value="spawnEffect">Spawn Effects</option>
+              </select>
+            </div>
+            <div class="panel__body">
+              <div class="se-library-view" id="se-stickers"><!-- populated --></div>
+              <div class="se-library-view" id="se-equipment" hidden><!-- populated --></div>
+            </div>
           </div>
         </div>
       </section>

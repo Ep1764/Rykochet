@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "canvas": { "width": 512, "height": 512 },
+  "stickers": [
+    { "id": "eyes_round",   "name": "Round Eyes",   "file": "eyes_round.svg",   "tintable": false },
+    { "id": "eyes_angry",   "name": "Angry Eyes",   "file": "eyes_angry.svg",   "tintable": false },
+    { "id": "mouth_smile",  "name": "Smile",        "file": "mouth_smile.svg",  "tintable": false },
+    { "id": "mouth_flat",   "name": "Flat Mouth",   "file": "mouth_flat.svg",   "tintable": false },
+    { "id": "hat_wizard",   "name": "Wizard Hat",   "file": "hat_wizard.svg",   "tintable": true  },
+    { "id": "hat_cap",      "name": "Cap",          "file": "hat_cap.svg",      "tintable": true  }
+  ]
+}
