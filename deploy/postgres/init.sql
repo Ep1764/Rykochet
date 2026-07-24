@@ -140,3 +140,11 @@ CREATE TABLE IF NOT EXISTS recordings (
   favorites   INT NOT NULL DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS idx_recordings_recorded_at ON recordings (recorded_at);
+
+-- Grant the app role access to everything in the public schema.
+-- Required because init.sql is normally run as the `postgres` superuser,
+-- which would otherwise own the tables and lock the `rykochet` app role out.
+GRANT ALL PRIVILEGES ON ALL TABLES    IN SCHEMA public TO rykochet;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO rykochet;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES    TO rykochet;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO rykochet;
